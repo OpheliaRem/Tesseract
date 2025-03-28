@@ -1,0 +1,1 @@
+const char* creator = "Artem Vasiukov";
