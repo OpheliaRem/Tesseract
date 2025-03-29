@@ -2,7 +2,7 @@
 #define VECTOR_STR
 
 #include "../strings/dynamic_str/String.h"
-#include "../allocators/Allocator.h"
+#include "../../../allocators/Allocator.h"
 
 typedef struct {
     String* array;

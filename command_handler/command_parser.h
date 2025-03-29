@@ -114,6 +114,10 @@ void (*ONE_ARG_define_command(const char* name))(Console*, const char*) {
         return ram;
     }
 
+    if (assert_strings_equal("help", name)) {
+        return help;
+    }
+
     return 0;
 }
 

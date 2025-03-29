@@ -2,22 +2,25 @@
 #define DYNAMIC_STRING_IMPLEMENTATION
 
 #include "../os_string.h"
-#include "../../allocators/Allocator.h"
+#include "../../../../allocators/Allocator.h"
+#include "../../../simple_types/boolean.h"
 
 typedef struct {
     char* symbol_sequence;
     int size;
 } String;
 
-String string_from(char*);
+String string_from(const char*);
 void free_string(String*);
 void dynamic_string_foreach(String*, void(*)(char*));
 void char_sequence_from_string(char*, int, const String*);
 String concatenate_char_seq(char*, char*);
 String concatenate_and_kill_args(String*, String*);
+String make_deep_copy(const String*);
+boolean strings_are_equal(const String* a, const String* b);
 
 
-String string_from(char* symbol_sequence) {
+String string_from(const char* symbol_sequence) {
     String string;
     string.size = strlen(symbol_sequence);
     string.symbol_sequence = (char*)allocate(string.size + 1);
@@ -81,6 +84,24 @@ String concatenate_and_kill_args(String* a, String* b) {
     free(a);
     free(b);
     return str;
+}
+
+String make_deep_copy(const String* str) {
+    return string_from(str->symbol_sequence);
+}
+
+boolean strings_are_equal(const String* a, const String* b) {
+    if (a->size != b->size) {
+        return FALSE;
+    }
+
+    for (int i = 0; i < a->size; ++i) {
+        if (a->symbol_sequence[i] != b->symbol_sequence[i]) {
+            return FALSE;
+        }
+    }
+
+    return TRUE;
 }
 
 #endif

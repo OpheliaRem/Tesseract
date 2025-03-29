@@ -1,13 +1,15 @@
 #ifndef COMMANDS
 #define COMMANDS
 
+#include "command_parser.h"
+#include "command_configurer.h"
 #include "../terminal/terminal_output.h"
 #include "../terminal/Console.h"
 #include "../basic_os_info/creators.h"
-#include "command_parser.h"
 #include "../allocators/Allocator.h"
 #include "../custom_types/data_structures/strings/os_string.h"
 #include "../convert/convert.h"
+#include "../custom_types/data_structures/strings/dynamic_str/String.h"
 
 typedef struct {
     char* name;
@@ -24,6 +26,7 @@ void ram_write(Console*);
 void ram_read(Console*);
 void ram_free(Console*);
 void ram_use(Console*);
+void help(Console*, const char* arg);
 
 char* read_dynamic_string_from_console(Console*);
 int count_bytes(char*);
@@ -158,6 +161,14 @@ int count_bytes(char* ptr) {
         ++number_of_bytes;
     }
     return number_of_bytes;
+}
+
+void help(Console* console, const char* arg) {
+    insert_new_line(console);
+    print(string_from(arg).symbol_sequence, console);
+
+    String message = get_in_hash_map_str_str(&map_of_terminal_commands, string_from(arg));
+    println(message.symbol_sequence, console);
 }
 
 #endif

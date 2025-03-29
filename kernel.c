@@ -7,6 +7,7 @@
 #include "terminal/Console.h"
 #include "convert/convert.h"
 #include "allocators/Allocator.h"
+#include "command_handler/command_configurer.h"
 
 #define KEYBOARD_DATA_PORT 0x60
 #define KEYBOARD_STATUS_PORT 0x64
@@ -31,9 +32,14 @@ void keyboard_handler_main() {
     }
 }
 
+void printall(String* str) {
+    println(str->symbol_sequence, &console);
+}
+
 void kmain(void) {
 
     configure_heap();
+    configure_commands();
 
     console.video_ptr = get_video_memory_ptr();
     console.kernel_color_of_text = COLOR_GREEN;
@@ -47,6 +53,8 @@ void kmain(void) {
 
     println("Welcome to Tesseract: free and open-source operating system", &console);
     println("Please press 'Enter' to open terminal mode", &console);
+
+    hash_map_str_str_foreach(&map_of_terminal_commands, printall);
 
     idt_init();
     keyboard_init();
