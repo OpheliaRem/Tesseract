@@ -1,7 +1,7 @@
 #ifndef CONVERT
 #define CONVERT
 
-#include "allocators/linear_allocator.h"
+#include "allocators/Allocator.h"
 #include "type_definitions.h"
 #include "os_string.h"
 
@@ -37,7 +37,7 @@ void int_to_string(int num, char* buffer, int buffer_size) {
 
     clean_char_buffer(buffer, buffer_size);
 
-    char* digits = (char*)allocate_linear(number_of_digits * sizeof(char));
+    char* digits = (char*)allocate(number_of_digits * sizeof(char));
 
     if (!digits) {
         return;
@@ -60,7 +60,7 @@ void inverse_string(char* source, char* destination, int number_of_bytes) {
 }
 
 void retrieve_digits_from_number(int num, int number_of_digits, char* digits) {
-    char* inverted_digits = (char*)allocate_linear(number_of_digits * sizeof(char));
+    char* inverted_digits = (char*)allocate(number_of_digits * sizeof(char));
 
     for (int i = 0; i < number_of_digits; ++i) {
         inverted_digits[i] = num % 10;

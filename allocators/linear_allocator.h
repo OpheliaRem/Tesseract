@@ -18,7 +18,7 @@ void* allocate_linear(int size) {
     return new_address;
 }
 
-void free(void* ptr) {
+void linear_free(void* ptr) {
 
 }
 

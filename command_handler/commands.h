@@ -5,7 +5,7 @@
 #include "../terminal/Console.h"
 #include "../creators.h"
 #include "command_parser.h"
-#include "../allocators/linear_allocator.h"
+#include "../allocators/Allocator.h"
 #include "../os_string.h"
 #include "../convert.h"
 
@@ -22,6 +22,9 @@ void creators(Console*);
 void ram(Console*, const char*);
 void ram_write(Console*);
 void ram_read(Console*);
+void ram_clear(Console*);
+
+char* read_dynamic_string_from_console(Console*);
 int count_bytes(char*);
 
 void clear(Console* console) {
@@ -68,6 +71,10 @@ void ram(Console* console, const char* arg) {
     if (assert_strings_equal("read", arg)) {
         return ram_read(console);
     }
+
+    if (assert_strings_equal("clear", arg)) {
+        return ram_clear(console);
+    }
 }
 
 void ram_write(Console* console) {
@@ -75,8 +82,8 @@ void ram_write(Console* console) {
 
     int number_of_bytes = count_bytes(console->video_ptr) / 2;
 
-    char* buffer = allocate_linear(number_of_bytes + 1);
-    for (int i = 0; i < number_of_bytes + 1; ++i) {
+    char* buffer = (char*)allocate(number_of_bytes + 1);
+    for (int i = 0; i < number_of_bytes; ++i) {
         buffer[i] = *(console->video_ptr);
         console->video_ptr += 2;
     }
@@ -99,19 +106,41 @@ void ram_write(Console* console) {
 void ram_read(Console* console) {
     console->video_ptr += 2;
 
-    int number_of_bytes = count_bytes(console->video_ptr) / 2;
-
-    char* address_buffer = allocate_linear(number_of_bytes + 1);
-    for (int i = 0; i < number_of_bytes + 1; ++i) {
-        address_buffer[i] = *(console->video_ptr);
-        console->video_ptr += 2;
-    }
-    address_buffer[number_of_bytes] = '\0';
+    char* address_buffer = read_dynamic_string_from_console(console);
 
     ubyte* address = (ubyte*)string_to_int(address_buffer);
 
     insert_new_line(console);
     println(address, console);
+
+    free(address_buffer);
+}
+
+void ram_clear(Console* console) {
+    console->video_ptr += 2;
+
+    char* address_buffer = read_dynamic_string_from_console(console);
+
+    ubyte* address = (ubyte*)string_to_int(address_buffer);
+
+    free(address);
+
+    insert_new_line(console);
+    println("The memory was successfully freed", console);
+
+    free(address_buffer);
+}
+
+char* read_dynamic_string_from_console(Console* console) {
+    int number_of_bytes = count_bytes(console->video_ptr) / 2;
+
+    char* buffer = (char*)allocate(number_of_bytes + 1);
+    for (int i = 0; i < number_of_bytes; ++i) {
+        buffer[i] = *(console->video_ptr);
+        console->video_ptr += 2;
+    }
+    buffer[number_of_bytes] = '\0';
+    return buffer;
 }
 
 int count_bytes(char* ptr) {

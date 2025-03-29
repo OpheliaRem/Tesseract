@@ -2,18 +2,18 @@
 #define TREE_FOR_ALLOC
 
 #include "linear_allocator.h"
-#include "boolean.h"
+#include "../boolean.h"
 
 typedef struct {
     void* address;
     int capacity;
 } AllocationUnit;
 
-typedef struct {
+typedef struct AllocationTreeNode {
     AllocationUnit unit;
-    AllocationTreeNode* right;
-    AllocationTreeNode* left;
-    AllocationTreeNode* parent;
+    struct AllocationTreeNode* right;
+    struct AllocationTreeNode* left;
+    struct AllocationTreeNode* parent;
 } AllocationTreeNode;
 
 typedef struct {
