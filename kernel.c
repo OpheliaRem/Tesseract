@@ -32,10 +32,6 @@ void keyboard_handler_main() {
     }
 }
 
-void printall(String* str) {
-    println(str->symbol_sequence, &console);
-}
-
 void kmain(void) {
 
     configure_heap();
@@ -53,8 +49,6 @@ void kmain(void) {
 
     println("Welcome to Tesseract: free and open-source operating system", &console);
     println("Please press 'Enter' to open terminal mode", &console);
-
-    hash_map_str_str_foreach(&map_of_terminal_commands, printall);
 
     idt_init();
     keyboard_init();
