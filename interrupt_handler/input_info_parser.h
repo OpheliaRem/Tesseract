@@ -3,9 +3,9 @@
 
 #include "../terminal/terminal_output.h"
 #include "keyboard_map.h"
-#include "../UserInteractionMode.h"
+#include "../terminal/UserInteractionMode.h"
 #include "../terminal/colors.h"
-#include "../important_symbols.h"
+#include "../basic_os_info/important_symbols.h"
 #include "../command_handler/command_parser.h"
 
 void define_interrupt(char, Console*);

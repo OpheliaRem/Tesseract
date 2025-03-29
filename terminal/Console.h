@@ -1,7 +1,7 @@
 #ifndef CONSOLE
 #define CONSOLE
 
-#include "../UserInteractionMode.h"
+#include "UserInteractionMode.h"
 #include "colors.h"
 #include "Cursor.h"
 

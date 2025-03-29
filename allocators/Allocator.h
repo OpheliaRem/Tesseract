@@ -1,12 +1,17 @@
 #ifndef ALLOCATOR
 #define ALLOCATOR
 
-#include "../type_definitions.h"
+#include "../custom_types/simple_types/type_definitions.h"
 
 #define HEAP_SIZE 131072
 
 static ubyte heap[HEAP_SIZE];
 static ubyte bytemap[HEAP_SIZE];
+
+void configure_heap();
+void* allocate(int);
+void free(void*);
+int get_bytes_used();
 
 void configure_heap() {
     for (int i = 0; i < HEAP_SIZE; ++i) {
@@ -20,7 +25,8 @@ void* allocate(int size) {
         while(index < HEAP_SIZE && bytemap[index] == 1) {
             index++;
         }
-        int begin_index = index + 1;
+        index++;
+        int begin_index = index;
     
         while(index < HEAP_SIZE && bytemap[index] == 0) {
             if (index - begin_index >= size + 1) {
@@ -52,6 +58,16 @@ void free(void* ptr) {
         bytemap[index] = 0;
         index++;
     }
+}
+
+int get_bytes_used() {
+    int counter = 0;
+    for (int i = 0; i < HEAP_SIZE; ++i) {
+        if (bytemap[i] == 1) {
+            ++counter;
+        }
+    }
+    return counter;
 }
 
 

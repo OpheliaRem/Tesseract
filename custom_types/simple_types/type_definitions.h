@@ -3,5 +3,4 @@
 
 typedef unsigned char ubyte;
 
-
 #endif

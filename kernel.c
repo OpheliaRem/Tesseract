@@ -3,9 +3,9 @@
 #include "terminal/colors.h"
 #include "interrupt_handler/idt.h"
 #include "interrupt_handler/input_info_parser.h"
-#include "UserInteractionMode.h"
+#include "terminal/UserInteractionMode.h"
 #include "terminal/Console.h"
-#include "convert.h"
+#include "convert/convert.h"
 #include "allocators/Allocator.h"
 
 #define KEYBOARD_DATA_PORT 0x60

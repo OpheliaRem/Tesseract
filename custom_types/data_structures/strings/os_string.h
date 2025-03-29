@@ -1,7 +1,7 @@
 #ifndef OS_STRING
 #define OS_STRING
 
-#include "boolean.h"
+#include "../../simple_types/boolean.h"
 
 boolean assert_strings_equal(const char* a, const char* b);
 void clean_char_buffer(char* buffer, int size);

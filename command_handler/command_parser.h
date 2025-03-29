@@ -2,9 +2,9 @@
 #define COMMAND_PARSER
 
 #include "commands.h"
-#include "../important_symbols.h"
+#include "../basic_os_info/important_symbols.h"
 #include "../terminal/Console.h"
-#include "../os_string.h"
+#include "../custom_types/data_structures/strings/os_string.h"
 
 
 void parse_and_execute_command(Console* console);

@@ -1,9 +1,9 @@
 #ifndef CONVERT
 #define CONVERT
 
-#include "allocators/Allocator.h"
-#include "type_definitions.h"
-#include "os_string.h"
+#include "../allocators/Allocator.h"
+#include "../custom_types/simple_types/type_definitions.h"
+#include "../custom_types/data_structures/strings/os_string.h"
 
 
 char map_digit_to_char(char);
